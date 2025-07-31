@@ -1,38 +1,64 @@
-# sv
+# EXIF Tag Viewer
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A SvelteKit 5 web app for viewing EXIF metadata from image files, with full offline support and PWA features. Built with Svelte, Tailwind CSS, and exifr.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Drag-and-drop or select images (JPG, JPEG, HEIC, HEIF)
+- Displays EXIF metadata in a responsive table
+- Shows image thumbnails
+- Works offline as a PWA (installable on iOS/Android)
+- Mobile-friendly UI with Tailwind CSS
 
-```bash
-# create a new project in the current directory
-npx sv create
+## Getting Started
 
-# create a new project in my-app
-npx sv create my-app
-```
+### Development
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Install dependencies:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+bun install
 ```
 
-## Building
-
-To create a production version of your app:
+Start the development server:
 
 ```bash
-npm run build
+bun run dev
 ```
 
-You can preview the production build with `npm run preview`.
+Visit [localhost:5173](http://localhost:5173) (or the port shown in your terminal).
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+### Building for Production
+
+Build a static version of the app:
+
+```bash
+bun run build
+```
+
+The static site will be output to the `build` directory.
+
+### Serving the Static Site
+
+You can serve the static build locally with:
+
+```bash
+bun add -g serve
+serve build
+```
+
+### PWA & Offline Support
+
+- The app is installable as a PWA and works offline.
+- Add to your iOS/Android home screen for a native-like experience.
+
+## Tech Stack
+
+- [SvelteKit 5](https://kit.svelte.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [exifr](https://github.com/MikeKovarik/exifr) (for EXIF parsing)
+- [Vite PWA Plugin](https://vite-pwa-org.netlify.app/)
+
+## License
+
+MIT
