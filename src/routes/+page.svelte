@@ -4,6 +4,29 @@
   let exifTags: Record<string, any>[] = [];
   let imageThumbs: string[] = [];
 
+  // PWA install prompt
+  let deferredPrompt: any = null;
+  let showInstall = false;
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      showInstall = true;
+    });
+  }
+
+  async function promptInstall() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        showInstall = false;
+      }
+      deferredPrompt = null;
+    }
+  }
+
   function onFilesChanged(event: Event) {
     const input = event.target as HTMLInputElement;
     const files = input.files ? Array.from(input.files) : [];
@@ -29,7 +52,12 @@
 <div class="container mx-auto mt-6">
 <h1 class="text-3xl font-bold mb-4 text-center">EXIF Tag Viewer</h1>
 
-  <div class="flex justify-center items-center">
+  <div class="flex flex-col items-center justify-center gap-4">
+    {#if showInstall}
+      <button on:click={promptInstall} class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded shadow">
+        Install App
+      </button>
+    {/if}
     <input
       type="file"
       id="file-upload"
